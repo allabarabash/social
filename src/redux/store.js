@@ -1,3 +1,8 @@
+import profileReducer from "./profile-reducer";
+import dialogsReducer from "./dialogs-reducer";
+import sidebarReducer from "./sidebar-reducer";
+
+
 let store = {
     _state: {
         profilePage: {
@@ -24,34 +29,32 @@ let store = {
                 {id: 3, message: 'Yo'},
                 {id: 4, message: 'Yo'},
                 {id: 5, message: 'Yo'}
-            ]
+            ],
+            newMessageBody: ''
         },
         sidebar: {}
-    },
-    getState() {
-        return this._state
     },
     _callSubscriber () {
         // subscriber benachrichtigen - notify subscriber;
         // subscriber is rerenderEntireTree
         console.log('State has been changed')
     },
-    addPost() {
-        const newPost = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-        this._callSubscriber(this._state)
-    },
-    updateNewPostText (newText){
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber(this._state)
+
+    getState() {
+        return this._state
     },
     subscribe(observer){
         this._callSubscriber = observer
+    },
+
+    dispatch(action) { // action is an object which describes what to do, type: 'ADD-POST'
+
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action)
+
+        this._callSubscriber(this._state)
+
     }
 
 }
