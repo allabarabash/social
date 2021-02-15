@@ -9,20 +9,17 @@ import {
 
 const Dialogs = (props) => {
 
-    const state = props.store.getState().dialogsPage
-
-    const dialogsElements =  state.dialogs.map( d => <DialogItem name={d.name} id={d.id} />  )
-    const messagesElements = state.messages.map( m => <Message message={m.message}/> )
-    const newMessageBody = state.newMessageBody
+    const dialogsElements =  props.dialogsPage.dialogs.map( d => <DialogItem name={d.name} id={d.id} />  )
+    const messagesElements = props.dialogsPage.messages.map( m => <Message message={m.message}/> )
+    const newMessageBody = props.dialogsPage.newMessageBody
 
     const onSendMessageClick = () => {
-        props.dispatch(sendMessageActionCreator())
+        props.sendMessage()
     }
 
     const onNewMessageChange = (e) => {
         const body = e.target.value
-        const action = updateNewMessageBodyActionCreator(body)
-        props.dispatch(action)
+        props.updateNewMessageBody(body)
     }
 
 
