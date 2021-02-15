@@ -4,7 +4,7 @@ import dialogsReducer from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 
 const reducers = combineReducers({
-    profilePage: profileReducer,
+    profilePage: profileReducer, // each reducer is responsible for it's tree in the app
     dialogsPage: dialogsReducer,
     sidebarPage: sidebarReducer
 })
