@@ -1,36 +1,29 @@
 import React from 'react';
 import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/profile-reducer";
 import MyPosts from "./MyPosts";
-import StoreContext from "../../../StoreContext";
+import {connect} from "react-redux";
 
 
-const MyPostsContainer = () => {
-
-    return (
-        <StoreContext.Consumer>
-            {
-            (store) => {
-                const state = store.getState().profilePage
-
-                const addPost = () => {
-                    store.dispatch(addPostActionCreator()) // components shouldnt know much about logic and state
-                }
-
-                const onPostChange = (text) => {
-                    const action = updateNewPostTextActionCreator(text)
-                    store.dispatch(action)
-                }
-
-                return (
-                    <MyPosts updateNewPostText={onPostChange}
-                             addPost={addPost}
-                             posts={state.posts}
-                             newPostText={state.newPostText}/>)
-            }
-        }
-
-        </StoreContext.Consumer>
-    )
+// former props which came from state; e.g dialogsPage
+const mapStateToProps = (state) => {
+    return {
+        posts: state.profilePage.posts,
+        newPostText: state.profilePage.newPostText
+    }
 }
 
-export default MyPostsContainer;
+// callbacks (or dispatched actions)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateNewPostText: (text) => {
+            const action = updateNewPostTextActionCreator(text)
+            dispatch(action)
+        },
+        addPost: () => {
+            dispatch(addPostActionCreator()) // we dispatch result of the fn - action
+        }
+    }
+}
+
+const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
+export default MyPostsContainer

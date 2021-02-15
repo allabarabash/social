@@ -14,7 +14,7 @@ const MyPosts = (props) => {
         // let text = newPostElement.current.value
         //props.dispatch(addPostActionCreator()) // components shouldnt know mush about logic and state
         props.addPost()
-        }
+     }
 
     const onPostChange = ()  => {
         const text = newPostElement.current.value
