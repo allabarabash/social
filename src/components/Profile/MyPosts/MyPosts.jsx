@@ -10,17 +10,15 @@ const MyPosts = (props) => {
 
     const newPostElement = React.createRef()
 
-    const addPost = () => {
+    const onAddPost = () => {
         // let text = newPostElement.current.value
-        // props.addPost()
-        props.dispatch(addPostActionCreator())
-    }
+        //props.dispatch(addPostActionCreator()) // components shouldnt know mush about logic and state
+        props.addPost()
+        }
 
-    const onPostChange = () => {
+    const onPostChange = ()  => {
         const text = newPostElement.current.value
-        // const action = { type: 'UPDATE-NEW-POST-TEXT', newText: text }
-        const action = updateNewPostTextActionCreator(text)
-        props.dispatch(action)
+        props.updateNewPostText(text)
     }
 
     return (
@@ -33,7 +31,7 @@ const MyPosts = (props) => {
                               value={props.newPostText}/>
                 </div>
                 <div>
-                    <button onClick={ addPost }>Add post</button>
+                    <button onClick={ onAddPost }>Add post</button>
                 </div>
             </div>
             <div className={s.posts}>

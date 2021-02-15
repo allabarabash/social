@@ -16,9 +16,7 @@ const App = (props) => {
                        render={ () => <Dialogs store={props.store}
                                                dispatch={props.dispatch}/> }/>
                 <Route path='/profile'
-                       render={ () => <Profile
-                           profilePage={props.state.profilePage}
-                           dispatch={props.dispatch}/> }/>
+                       render={ () => <Profile store={props.store}/> }/>
             </div>
         </div>
 
