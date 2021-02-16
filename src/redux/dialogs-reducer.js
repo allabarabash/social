@@ -20,15 +20,25 @@ const initialState = {
     newMessageBody: ''
 }
 const dialogsReducer = (state = initialState, action) => {
+
+    // first shallow cpy (oberflaechliche Kopie),
+    // then override specific keys: уточняем короче
+    let stateCopy
+
     switch(action.type) {
-        case UPDATE_NEW_MESSAGE_BODY:
-            state.newMessageBody = action.body
-            return state
+        case UPDATE_NEW_MESSAGE_BODY: {
+            stateCopy = {...state}
+            stateCopy.newMessageBody = action.body
+            return stateCopy
+        }
+
         case SEND_MESSAGE:
             const body = state.newMessageBody
-            state.messages.push({id: 6, message: body})
-            state.newMessageBody = ''
-            return state
+            stateCopy = {
+                ...state,
+                newMessageBody: '',
+                messages: [...state.messages, {id: 20, message: body}]}
+            return stateCopy
         default:
             return state
     }
