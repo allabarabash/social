@@ -6,17 +6,17 @@ const User = (props) => {
         <div key={props.key}>
                 <span>
                     <div>
-                        <img src={props.photoUrl} className={s.userPhoto} width="200"/>
+                        <img src={props.photo != null ? props.photo : props.userPhoto} className={s.userPhoto} width="200"/>
                     </div>
                     <div>
-                        {props.following
+                        {props.followed
                             ? <button onClick={() => props.unfollow(props.id)}>Unfollow</button>
                             : <button onClick={() => props.follow(props.id)}>Follow</button>}
                         </div>
                 </span>
             <span>
                     <span>
-                        <div>{props.fullName}</div>
+                        <div>{props.name}</div>
                         <div>{props.status}</div>
                     </span>
                     <span>
