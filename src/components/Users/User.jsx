@@ -6,12 +6,12 @@ const User = (props) => {
         <div id={props.id}>
                 <span>
                     <div>
-                        <img src={props.photo != null ? props.photo : props.userPhoto} className={s.userPhoto} width="200"/>
+                        <img src={props.photo != null ? props.photo : props.userPhoto} className={s.userPhoto}/>
                     </div>
                     <div>
                         {props.followed
                             ? <button onClick={() => props.unfollow(props.id)}>Unfollow</button>
-                            : <button onClick={() => {props.follow(props.id)}}>Follow</button>}
+                            : <button onClick={() => props.follow(props.id)}>Follow</button>}
                         </div>
                 </span>
             <span>
