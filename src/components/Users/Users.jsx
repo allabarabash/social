@@ -1,40 +1,42 @@
-import React from 'react'
+import React, {Component} from 'react'
 import User from "./User";
 import * as axios from "axios";
 import userPhoto from "../../../src/assets/images/user.jpg"
 
-const Users = (props) => {
+class Users extends Component{
 
-    const getUsers = () => {
-        if (props.users.length === 0) {
+    constructor(props) {
+        super(props)
+        if  (this.props.users.length === 0) {
             axios.get("https://social-network.samuraijs.com/api/1.0/users")
                 .then(response => {
-                    props.setUsers(response.data.items)
+                    this.props.setUsers(response.data.items)
                 })
         }
+
+
     }
-
-
-    const usersToRender = props.users.map( u => <User key={u.id}
-                                                      id={u.id}
-                                                      name={u.name}
-                                                      userPhoto={userPhoto}
-                                                      photo={u.photos.small}
-                                                      status={u.status}
-                                                      country={"u.location.country"}
-                                                      city={"u.location.city"}
-                                                      followed={u.followed}
-                                                      follow={props.follow}
-                                                      unfollow={props.unfollow}
-    />)
-
-    return (
-        <div>
-            <button onClick={getUsers}>Get Users</button>
+    render() {
+        const usersToRender = this.props.users.map( u => <User key={u.id}
+                                                          id={u.id}
+                                                          name={u.name}
+                                                          userPhoto={userPhoto}
+                                                          photo={u.photos.small}
+                                                          status={u.status}
+                                                          country={"u.location.country"}
+                                                          city={"u.location.city"}
+                                                          followed={u.followed}
+                                                          follow={this.props.follow}
+                                                          unfollow={this.props.unfollow}
+        />)
+        return (
             <div>
-                {usersToRender}
+                <div>
+                    {usersToRender}
+                </div>
             </div>
-        </div>)
+        )
+    }
 }
 
 export default Users
