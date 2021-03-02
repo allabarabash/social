@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './users.module.css';
 import {NavLink} from "react-router-dom";
+import * as axios from "axios";
 
 const User = (props) => {
     return (
@@ -14,8 +15,39 @@ const User = (props) => {
                     </div>
                     <div>
                         {props.followed
-                            ? <button onClick={() => props.unfollow(props.id)}>Unfollow</button>
-                            : <button onClick={() => props.follow(props.id)}>Follow</button>}
+                            ? <button onClick={() => {
+
+                                axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${props.id}`, {
+                                    withCredentials: true,
+                                    headers: {
+                                        'API-KEY': '15c03332-b7d8-40ce-9da8-3df65698dfcb'
+                                    }
+                                })
+                                    .then(response => {
+                                        if (response.data.resultCode === 0) {
+                                            props.unfollow(props.id) // dispatch into reducer
+                                        }
+                                    })
+                                    .then(console.log('Not following'))
+
+                            }}>Unfollow</button>
+                            : <button onClick={() => {
+                                axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${props.id}`, {}, {
+                                    withCredentials: true,
+                                    headers: {
+                                        'API-KEY': '15c03332-b7d8-40ce-9da8-3df65698dfcb'
+                                    }
+                                })
+                                    .then(response => {
+                                        if (response.data.resultCode === 0) {
+                                            props.follow(props.id) // dispatch into reducer
+                                        }
+                                    })
+                                    .then(console.log('Following'))
+
+
+
+                            }}>Follow</button>}
                         </div>
                 </span>
             <span>
